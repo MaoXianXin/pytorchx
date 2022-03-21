@@ -1,3 +1,5 @@
+import time
+
 import torch
 from torch import nn
 import torchvision
@@ -14,16 +16,19 @@ def main():
     #print('state dict: ', net.state_dict().keys())
     tmp = torch.ones(1, 3, 224, 224).to('cuda:0')
     print('input: ', tmp)
-    out = net(tmp)
+    start = time.time()
+    for i in range(10000):
+        out = net(tmp)
     print('output:', out)
+    print('elapsed time: ', time.time() - start)
 
     summary(net, (3,224,224))
     #return
     f = open("resnet50.wts", 'w')
     f.write("{}\n".format(len(net.state_dict().keys())))
     for k,v in net.state_dict().items():
-        print('key: ', k)
-        print('value: ', v.shape)
+        # print('key: ', k)
+        # print('value: ', v.shape)
         vr = v.reshape(-1).cpu().numpy()
         f.write("{} {}".format(k, len(vr)))
         for vv in vr:
