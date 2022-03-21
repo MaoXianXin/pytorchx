@@ -9,3 +9,5 @@ pytorch-summary/
 */*/*.wts
 */*/__pycache__/
 */*/log*
+
+.idea/
